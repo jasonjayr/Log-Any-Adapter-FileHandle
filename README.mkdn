@@ -1,0 +1,57 @@
+# NAME
+
+Log::Any::Adapter::FileHandle - A basic Log::Any::Adapter to forward messages to a filehandle
+
+# VERSION
+
+version 0.001
+
+# SYNOPSIS
+
+  use Log::Any qw($log);
+
+  $log->set_adapter('FileHandle');
+
+  $log->info("Hello world");
+ 
+
+# DESCRIPTION
+
+This module is a basic adapter that will simply forward log messages to a filehandle, or any object that
+supports a 'print' method ([IO::String](http://search.cpan.org/perldoc?IO::String), [IO::Socket::INET](http://search.cpan.org/perldoc?IO::Socket::INET), Plack's $env->{psgi.errors} object, etc).
+
+I've created it so that my scripts running under damontools or runit can output
+messages to locally defined logs.  It does not timestamp messages, that responsbility  is
+delegated to the external log capture mechanism.
+
+You can override the default configuration by passing extra arguments to the
+`Log::Any` set_adapter method:
+
+- fh
+
+Pass in your IO::Handle-like object here.  If this isn't specified, it will default to opening STDERR. 
+If the object supports an autoflush method, autoflush will be enabled, unless no_autoflush is set.
+
+- no_autoflush
+
+Disable automatically turning on autoflush on the fh object.
+
+- format
+
+A sprintf string that controls the formatting of the message.  It is supplied 2
+arguments: the log level as supplied by Log::Any (usually all-lowercase), and
+the message to be logged.  The default is "[%s] %s\n".  This value should contain the log
+record terminator, such as a newline.
+
+
+
+# COPYRIGHT AND LICENSE
+
+Copyright 2010 by Jason Jay Rodrigues <jasonjayr+oss@gmail.com>
+
+Log::Any::Adapter::FileHandle is provided "as is" and without any express or
+implied warranties, including, without limitation, the implied warranties of
+merchantibility and fitness for a particular purpose.
+
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
