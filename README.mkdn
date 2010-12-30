@@ -4,7 +4,7 @@ Log::Any::Adapter::FileHandle - A basic Log::Any::Adapter to forward messages to
 
 # VERSION
 
-version 0.001
+version 0.004
 
 # SYNOPSIS
 
