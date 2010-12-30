@@ -83,10 +83,6 @@ sub init {
 	if(!exists($self->{format})) { 
 		$self->{format} = "[%s] %s\n";
 	}
-	
-	unless(blessed($self->{fh}) && $self->{fh}->can('print')) { 
-		die "Object passed in for fh does not support print: $self->{fh}";
-	}
 }
 
 
