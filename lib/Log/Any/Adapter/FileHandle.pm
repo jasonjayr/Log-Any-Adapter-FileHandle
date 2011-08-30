@@ -75,7 +75,7 @@ sub init {
 		$self->{fh} = IO::Handle->new_from_fd(fileno(STDERR),'w');
 	}
 
-	if($self->{fh}->can('autoflush') && $self->{no_autoflush}) { 
+	if($self->{fh}->can('autoflush') && !$self->{no_autoflush}) { 
 		$self->{fh}->autoflush(1);
 	}
 	
