@@ -10,7 +10,7 @@ version 0.004
 
   use Log::Any qw($log);
 
-  $log->set_adapter('FileHandle');
+  Log::Any::Adapter->set('FileHandle');
 
   $log->info("Hello world");
  
