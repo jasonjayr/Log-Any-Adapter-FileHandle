@@ -71,7 +71,6 @@ use base qw(Log::Any::Adapter::Base);
 sub init {
 	my ($self, %attr) = @_;
 	
-	
 	# if no fh object is set, we default to STDERR.
 	if(!exists($self->{fh})) { 
 		$self->{fh} = IO::Handle->new_from_fd(fileno(STDERR),'w');
@@ -85,6 +84,10 @@ sub init {
 	if(!exists($self->{format})) { 
 		$self->{format} = "[%s] %s\n";
 	}
+
+	if(!exists($self->{escape})) { 
+		$self->{escape} = 'none';
+	}
 }
 
 
@@ -93,8 +96,16 @@ sub init {
 	foreach my $method ( Log::Any->logging_methods() ) {
 		my $logger = sub {
 			my $self = shift;
+			my $message = join('',@_);
+			if($self->{escape} eq 'newline' || $self->{escape} eq 'nonascii') { 
+				$message =~ s/\n/\\n/sg;
+				$message =~ s/\r/\\r/sg;
+			}
+			if($self->{escape} eq 'nonascii') { 
+				$message =~ s/(\P{ASCII}|\p{PosixCntrl})/sprintf("\\x{%x}",ord($1))/eg;
+			}
 			if($self->{fh}) { 
-				$self->{fh}->print(sprintf($self->{format}, $method, join('',@_)));
+				$self->{fh}->print(sprintf($self->{format}, $method, $message));
 			}
 		};
 		make_method($method, $logger);
