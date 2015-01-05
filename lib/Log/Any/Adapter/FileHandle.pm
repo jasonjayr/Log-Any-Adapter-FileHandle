@@ -30,8 +30,9 @@ C<Log::Any> set_adapter method:
 
 =item fh
 
-Pass in your IO::Handle-like object here.  If this isn't specified, it will default to opening STDERR. 
-If the object supports an autoflush method, autoflush will be enabled, unless no_autoflush is set.
+Pass in your IO::Handle-like object here.  If this isn't specified, it will
+default to opening STDERR.  If the object supports an autoflush method,
+autoflush will be enabled, unless no_autoflush is set.
 
 =item no_autoflush
 
@@ -41,15 +42,22 @@ Disable automatically turning on autoflush on the fh object.
 
 A sprintf string that controls the formatting of the message.  It is supplied 2
 arguments: the log level as supplied by Log::Any (usually all-lowercase), and
-the message to be logged.  The default is "[%s] %s\n".  This value should contain the log
-record terminator, such as a newline.
+the message to be logged.  The default is "[%s] %s\n".  This value should
+contain the log record terminator, such as a newline.
+
+=item escape
+
+one of 'none' (default), 'newline', or 'nonascii'.  Controls how messages are
+pre-filtered before passing them to a filehandle. This is handy if you want do
+smoosh messages into a single line (for easier filtering + processing), or if
+you want to filter non ascii characters for safe terminal printing.
 
 =back
 
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2010 by Jason Jay Rodrigues <jasonjayr+oss@gmail.com>
+Copyright 2014 by Jason Jay Rodrigues <jasonjayr+oss@gmail.com>
 
 Log::Any::Adapter::FileHandle is provided "as is" and without any express or
 implied warranties, including, without limitation, the implied warranties of

@@ -141,7 +141,7 @@ require_ok('Log::Any::Adapter::FileHandle') or die "Can't test the rest";
 	);
 	foreach my $item (@items) { 
 		$PrintCatcher4::should_be = $item->[1];
-		$log->warn($item->[0]);
+		$log->warning($item->[0]);
 	}
 	
 }
